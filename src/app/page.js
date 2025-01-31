@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 
 export default function Page() {
   const [minutes, setMinutes] = useState(0);
@@ -10,13 +11,26 @@ export default function Page() {
   const [showTimer, setShowTimer] = useState(true);
   const [isExploded, setIsExploded] = useState(false);
   const [isChristmas] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
 
   useEffect(() => {
     let timer;
     const audio = (filename) => new Audio(`/assets/${filename}`).play();
     const handleSpace = (e) => e.code === "Space" && audio("AK47_Fire1.wav");
 
-    if (isRunning) {
+    if (isRunning && !isPaused) {
       timer = setInterval(() => {
         setSeconds((prev) => {
           if (prev === 0) {
@@ -24,6 +38,7 @@ export default function Page() {
               clearInterval(timer);
               setIsExploded(true);
               audio("explode.wav");
+              setTimeout(() => resetTimer(), 2000);
               return -1;
             }
             setMinutes((m) => m - 1);
@@ -41,7 +56,7 @@ export default function Page() {
       clearInterval(timer);
       window.removeEventListener("keyup", handleSpace);
     };
-  }, [isRunning, minutes]);
+  }, [isRunning, minutes, isPaused]);
 
   const startTimer = () => {
     if ((!inputMinutes && !inputSeconds) || isRunning) return;
@@ -49,27 +64,56 @@ export default function Page() {
     setIsExploded(false);
     setMinutes(parseInt(inputMinutes) || 0);
     setSeconds(parseInt(inputSeconds) || 0);
+    setIsPaused(false);
     new Audio("/assets/armbomb.wav").play();
   };
 
+  const togglePause = () => {
+    setIsPaused(!isPaused);
+    new Audio("/assets/beep.wav").play();
+  };
+
+  const resetTimer = () => {
+    setIsExploded(false);
+    setTimeout(() => {
+      setIsRunning(false);
+      setInputMinutes("");
+      setInputSeconds("");
+      setMinutes(0);
+      setSeconds(0);
+      setIsPaused(false);
+      new Audio("/assets/doublebeep.wav").play();
+    }, 1000);
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#282828]">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-zinc-800 to-zinc-900">
       {!isExploded ? (
-        <div className="relative">
+        <div
+          style={{ animation: "fadeIn 0.5s ease-out forwards" }}
+          className="relative group opacity-0"
+        >
           <img
             src={`/assets/bomb${isChristmas ? "_christmas" : ""}.png`}
             alt="bomb"
-            className="w-96 cursor-pointer"
+            className="w-96 transition-transform group-hover:scale-105"
           />
+
           <div className="absolute top-[118px] left-1/2 -translate-x-1/2">
             {!isRunning && (
-              <span className="text-[#330000] text-4xl font-mono">00:00</span>
+              <span className="text-[#330000] text-4xl font-mono font-bold">
+                00:00
+              </span>
             )}
             <span
-              className="text-red-600 text-4xl font-mono"
+              className={`text-red-600 text-4xl font-mono font-bold ${
+                minutes === 0 && seconds <= 10 && isRunning
+                  ? "animate-pulse"
+                  : ""
+              }`}
               style={{
                 visibility: showTimer ? "visible" : "hidden",
-                textShadow: "0 0 2px red",
+                textShadow: "0 0 4px red",
               }}
             >
               {isRunning &&
@@ -80,44 +124,62 @@ export default function Page() {
                 )}`}
             </span>
           </div>
-          {!isRunning && (
-            <div className="absolute -top-20 left-1/2 -translate-x-1/2 flex gap-2">
-              <div className="flex gap-2 items-center">
+
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 flex flex-col gap-4 w-full max-w-xs">
+            {!isRunning ? (
+              <div className="flex gap-2 items-center justify-center bg-black/30 p-4 rounded-lg backdrop-blur">
                 <input
                   type="number"
                   value={inputMinutes}
                   onChange={(e) => setInputMinutes(e.target.value)}
                   placeholder="00"
-                  className="p-2 rounded w-16 text-black"
+                  className="w-20 p-2 text-center rounded bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500"
                   min="0"
                   max="59"
                 />
-                <span className="text-white">:</span>
+                <span className="text-white text-2xl">:</span>
                 <input
                   type="number"
                   value={inputSeconds}
                   onChange={(e) => setInputSeconds(e.target.value)}
                   placeholder="00"
-                  className="p-2 rounded w-16 text-black"
+                  className="w-20 p-2 text-center rounded bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500"
                   min="0"
                   max="59"
                 />
+                <button
+                  onClick={startTimer}
+                  className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                >
+                  Arm
+                </button>
               </div>
-              <button
-                onClick={startTimer}
-                className="px-4 py-2 bg-red-600 text-white rounded"
-              >
-                Start
-              </button>
-            </div>
-          )}
+            ) : (
+              <div className="flex gap-2 justify-center">
+                <button
+                  onClick={togglePause}
+                  className="px-6 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
+                >
+                  {isPaused ? "Resume" : "Pause"}
+                </button>
+                <button
+                  onClick={resetTimer}
+                  className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                >
+                  Defuse
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
-        <img
-          src="/assets/explosion2.gif"
-          alt="explosion"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <div className="fixed inset-0 bg-black">
+          <img
+            src="/assets/explosion2.gif"
+            alt="explosion"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
       )}
     </div>
   );
