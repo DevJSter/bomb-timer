@@ -62,9 +62,9 @@ export default function Page() {
             className="w-96 cursor-pointer"
           />
           <div className="absolute top-[118px] left-1/2 -translate-x-1/2">
-            <span className="text-[#330000] text-4xl font-mono absolute">
-              00:00
-            </span>
+            {!isRunning && (
+              <span className="text-[#330000] text-4xl font-mono">00:00</span>
+            )}
             <span
               className="text-red-600 text-4xl font-mono"
               style={{
@@ -72,11 +72,12 @@ export default function Page() {
                 textShadow: "0 0 2px red",
               }}
             >
-              {seconds === -1
-                ? ""
-                : `${String(minutes).padStart(2, "0")}:${String(
-                    seconds
-                  ).padStart(2, "0")}`}
+              {isRunning &&
+                seconds !== -1 &&
+                `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+                  2,
+                  "0"
+                )}`}
             </span>
           </div>
           {!isRunning && (
