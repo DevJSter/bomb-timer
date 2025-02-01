@@ -97,33 +97,33 @@ export default function Page() {
             alt="bomb"
             className="w-96 transition-transform group-hover:scale-105"
           />
-
-          <div className="absolute top-[119px] left-[185px] -translate-x-1/2">
-            {!isRunning && (
-              <span className="text-[#330000] text-4xl font-mono font-bold">
-                00:00
+         
+          <div className="absolute top-[114px] left-[182px] -translate-x-1/2 md:top-[119px] md:left-[185px]">
+            <div>
+              {!isRunning && (
+                <span className="text-[#330000] text-3xl md:text-4xl font-mono font-bold">
+                  00:00
+                </span>
+              )}
+              <span
+                className={`text-red-600 text-3xl md:text-4xl font-mono font-bold ${
+                  minutes === 0 && seconds <= 10 && isRunning
+                    ? "animate-pulse"
+                    : ""
+                }`}
+                style={{
+                  visibility: showTimer ? "visible" : "hidden",
+                  textShadow: "0 0 4px red",
+                }}
+              >
+                {isRunning &&
+                  seconds !== -1 &&
+                  `${String(minutes).padStart(2, "0")}:${String(
+                    seconds
+                  ).padStart(2, "0")}`}
               </span>
-            )}
-            <span
-              className={`text-red-600 text-4xl font-mono font-bold ${
-                minutes === 0 && seconds <= 10 && isRunning
-                  ? "animate-pulse"
-                  : ""
-              }`}
-              style={{
-                visibility: showTimer ? "visible" : "hidden",
-                textShadow: "0 0 4px red",
-              }}
-            >
-              {isRunning &&
-                seconds !== -1 &&
-                `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-                  2,
-                  "0"
-                )}`}
-            </span>
+            </div>
           </div>
-
           <div className="absolute -top-24 left-1/2 -translate-x-1/2 flex flex-col gap-4 w-full max-w-xs">
             {!isRunning ? (
               <div className="flex gap-2 items-center justify-center bg-black/30 p-4 rounded-lg backdrop-blur">
