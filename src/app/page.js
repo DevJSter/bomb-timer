@@ -98,7 +98,7 @@ export default function Page() {
             className="w-96 transition-transform group-hover:scale-105"
           />
 
-          <div className="absolute top-[118px] left-1/2 -translate-x-1/2">
+          <div className="absolute top-[119px] left-[185px] -translate-x-1/2">
             {!isRunning && (
               <span className="text-[#330000] text-4xl font-mono font-bold">
                 00:00
