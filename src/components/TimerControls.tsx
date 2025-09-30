@@ -21,6 +21,7 @@ interface TimerControlsProps {
   resetTimer: () => void;
 }
 
+
 export default function TimerControls({
   isRunning,
   isPaused,
