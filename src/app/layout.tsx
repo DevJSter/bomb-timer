@@ -16,8 +16,55 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Bomb Timer",
-  description: "Bomb Timer for devs for more competitive coding",
+  title: "💣 Bomb Timer - Ultimate Focus Timer & Pomodoro App",
+  description: "The best focus timer app with bomb countdown, pomodoro technique, and productivity features. Perfect for study sessions, work focus, and time management with sound alerts and keyboard shortcuts.",
+  keywords: [
+    "focus timer", "pomodoro timer", "productivity timer", "study timer", "work timer",
+    "bomb timer", "countdown timer", "time management", "focus app", "concentration timer",
+    "break timer", "coding timer", "task timer", "session timer", "deep work timer",
+    "meditation timer", "workout timer", "productivity app", "time tracking", "focus session"
+  ],
+  authors: [{ name: "DevJSter", url: "https://github.com/DevJSter" }],
+  creator: "DevJSter",
+  publisher: "DevJSter",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: "💣 Bomb Timer - Ultimate Focus Timer & Pomodoro App",
+    description: "The best focus timer app with bomb countdown, pomodoro technique, and productivity features. Perfect for study sessions, work focus, and time management.",
+    siteName: 'Bomb Timer',
+    images: [
+      {
+        url: '/assets/bomb.png',
+        width: 384,
+        height: 384,
+        alt: 'Bomb Timer - Focus Timer App',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "💣 Bomb Timer - Ultimate Focus Timer & Pomodoro App",
+    description: "The best focus timer app with bomb countdown, pomodoro technique, and productivity features.",
+    images: ['/assets/bomb.png'],
+    creator: '@DevJSter',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 interface RootLayoutProps {
