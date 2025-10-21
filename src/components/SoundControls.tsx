@@ -23,9 +23,9 @@ export default function SoundControls({
   setShowPresets
 }: SoundControlsProps) {
   return (
-    <div className="absolute left-1/2 -translate-x-1/2 w-[90vw] max-w-md" style={{ top: '-12vh' }}>
+    <div className="relative md:absolute left-1/2 -translate-x-1/2 w-[90vw] max-w-md md:top-[-12vh]">
       <Card className="p-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-4">
             <Button
               onClick={toggleMute}
@@ -44,7 +44,7 @@ export default function SoundControls({
                 max="100"
                 value={volume}
                 onChange={(e) => setVolume(parseInt(e.target.value))}
-                className="w-20 h-2 bg-gray-300 rounded-none appearance-none cursor-pointer border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                className="w-24 md:w-20 h-2 bg-gray-300 rounded-none appearance-none cursor-pointer border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                 title={`Volume: ${volume}%`}
                 style={{
                   background: `linear-gradient(to right, #000 0%, #000 ${volume}%, #ccc ${volume}%, #ccc 100%)`
@@ -59,7 +59,7 @@ export default function SoundControls({
           <Button
             onClick={() => setShowPresets(!showPresets)}
             variant="secondary"
-            className="text-xs font-black tracking-wider"
+            className="text-xs font-black tracking-wider w-full md:w-auto"
           >
             ⏱️ {showPresets ? "HIDE" : "PRESETS"}
           </Button>

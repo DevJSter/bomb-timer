@@ -11,10 +11,10 @@ export default function Footer({ isDarkTheme, isExploded }: FooterProps) {
   if (isExploded) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-10">
+    <div className="fixed bottom-3 left-3 right-3 z-10">
       <div className="max-w-4xl mx-auto">
-        <Card className="p-3">
-          <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
+        <Card className="p-2 md:p-3">
+          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 text-[10px] md:text-xs">
             <div className="flex items-center gap-2">
               <kbd className="px-2 py-1 rounded-none text-xs font-bold bg-yellow-400 text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                 SPACE
@@ -32,13 +32,6 @@ export default function Footer({ isDarkTheme, isExploded }: FooterProps) {
                 ESC
               </kbd>
               <span className="font-bold">DEFUSE/RESET</span>
-            </div>
-            <div className="flex items-center gap-1 text-xs font-bold">
-              <span>🎯 FOCUS TIMER</span>
-              <span>•</span>
-              <span>🍅 POMODORO</span>
-              <span>•</span>
-              <span>⚡ PRODUCTIVITY</span>
             </div>
           </div>
         </Card>

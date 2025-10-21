@@ -299,13 +299,13 @@ export default function Page(): React.JSX.Element {
   }, []);
 
   return (
-    <div className={`flex items-center justify-center min-h-screen transition-colors duration-500 ${
+    <div className={`flex items-center justify-center min-h-screen pb-24 md:pb-0 transition-colors duration-500 ${
       isDarkTheme 
         ? "bg-black dark" 
         : "bg-white"
     }`}>
       {!isExploded ? (
-       <div className="relative py-16 flex flex-col items-center gap-8">
+       <div className="relative py-10 md:py-16 flex flex-col items-center gap-6 md:gap-8">
   <BombDisplay
     isChristmas={isChristmas}
     hours={hours}

@@ -67,6 +67,12 @@ export const metadata: Metadata = {
   },
 };
 
+// Ensure proper mobile scaling
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 interface RootLayoutProps {
   children: ReactNode;
 }

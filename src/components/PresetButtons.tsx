@@ -17,8 +17,8 @@ export default function PresetButtons({
   className = ""
 }: PresetButtonsProps) {
   return (
-    <div className={`overflow-hidden transition-all duration-300 ease-in-out mt-8 mb-4 ${
-      showPresets ? "max-h-32 opacity-100" : "max-h-0 opacity-0"
+    <div className={`overflow-hidden transition-all duration-300 ease-in-out mt-6 md:mt-8 mb-4 ${
+      showPresets ? "max-h-48 md:max-h-32 opacity-100" : "max-h-0 opacity-0"
     } ${className}`}>
       <Card className="p-4">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
